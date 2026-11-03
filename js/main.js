@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   M.AutoInit();
 
-  // mensaje de bienvenida al cargar cualquier pagina del proyecto
+  // bienvenida
   M.toast({ html: 'Bienvenido a nuestro Proyecto Integrador', classes: 'red darken-3' });
 
-  // validacion basica del formulario de contacto
+  // validar contacto
   var formulario = document.getElementById('form-contacto');
 
   if (formulario) {
