@@ -111,6 +111,21 @@ nav ul li.active {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* avatares */
+.avatar {
+  width: 110px;
+  height: 110px;
+  margin: 28px auto 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--rojo);
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+}
+
 /* las cards de avances tienen una franja roja arriba */
 .card.avance {
   border-top: 5px solid var(--rojo);
