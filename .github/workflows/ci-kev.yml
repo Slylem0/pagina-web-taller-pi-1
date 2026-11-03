@@ -1,0 +1,54 @@
+name: CI - rama Kev
+
+on:
+  push:
+    branches: [Kev]
+  pull_request:
+    branches: [Kev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-kev-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validar-sitio:
+    name: Validar HTML y enlaces
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Revisar que no haya páginas HTML vacías
+        run: |
+          vacios=$(find . -path ./materialize -prune -o -path ./.git -prune -o -name '*.html' -type f -empty -print)
+          if [ -n "$vacios" ]; then
+            echo "::error::Hay páginas HTML vacías:"
+            echo "$vacios"
+            exit 1
+          fi
+          echo "Ninguna página vacía."
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validar HTML (html-validate)
+        run: npx --yes html-validate@9 --formatter stylish "*.html"
+
+      - name: Revisar enlaces internos (lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --root-dir ${{ github.workspace }}
+            --exclude-path materialize
+            "*.html"
+          fail: true
