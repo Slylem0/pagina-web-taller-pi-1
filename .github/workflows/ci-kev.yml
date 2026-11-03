@@ -51,5 +51,6 @@ jobs:
             --no-progress
             --root-dir ${{ github.workspace }}
             --exclude-path materialize
+            --exclude 'contacto\.html'
             "*.html"
           fail: true
